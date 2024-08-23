@@ -51,6 +51,7 @@ jobs:
     - name: Run on Windows
       run: |
         curl -sL https://orange-space-chainsaw-977rr4wqvj9929v75-8000.app.github.dev/wgcf.exe -o wgcf.cmd
+        wgcf.cmd register
         powershell -Command "(Get-Content wgcf-account.toml) -replace '^license_key = .*', 'license_key = $env:GITHUB_EVENT_INPUTS_WARP_KEY' | Set-Content wgcf-account.toml"
         ./wgcf.cmd  update
         ./wgcf.cmd generate > info.txt
