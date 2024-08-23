@@ -47,10 +47,9 @@ jobs:
         
     - name: Run on Windows
       run: |
-        dir
-        curl -sL https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_windows_amd64.exe -o install.cmd && ./install.cmd
-        wgcf_2.2.22_windows_amd64.exe register
-        wgcf_2.2.22_windows_amd64 generate | tee info.txt
+        curl -sL https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_windows_amd64.exe -o wgcf.cmd
+        yes | wgcf.cmd register
+        wgcf generate | tee info.txt
 
     - name: Upload profile
       uses: actions/upload-artifact@v3
