@@ -24,8 +24,9 @@ jobs:
         wget -q https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_linux_amd64
         chmod +x wgcf_2.2.22_linux_amd64
         yes | ./wgcf_2.2.22_linux_amd64 register
-        ./wgcf_2.2.22_linux_amd64 generate
-        ./wgcf_2.2.22_linux_amd64 status >> info.txt
+        sed -i 's/^license_key = .*/license_key = '"'"'${{ github.event.inputs.WARP_KEY }}'"'"'/g' wgcf-account.toml
+        ./wgcf_2.2.22_linux_amd64 generate update
+        ./wgcf_2.2.22_linux_amd64 generate >> info.txt
         
     - name: Upload profile
       uses: actions/upload-artifact@v3
