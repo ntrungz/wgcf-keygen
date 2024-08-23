@@ -3,12 +3,9 @@ on:
   workflow_dispatch:
     inputs:
       os:
-        description: 'What is your device operating system? (1 for Android/ Linux, 2 for Windows)'
-        required: true
-        default: '1'
+        description: 'Does your device run windows? (y) (leave blank if it run Android or Linux'
         options:
-          - '1'
-          - '2'
+          - y'
 
       WARP_KEY:
         type: string
@@ -16,10 +13,14 @@ on:
 
 jobs:
   ubuntu-job:
-    if: github.event.inputs.os == '1'
     runs-on: ubuntu-latest
     steps:
-    - name: Run on Ubuntu
+    - name: Set OSTYPE if os == y
+      if: matrix.os == 'y'
+      run: |
+        export OSTYPE=win64
+        
+    - name: Create your profile
       run: |
         wget -q https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_linux_amd64
         chmod +x wgcf_2.2.22_linux_amd64
@@ -29,47 +30,6 @@ jobs:
           fi
         ./wgcf_2.2.22_linux_amd64 update
         ./wgcf_2.2.22_linux_amd64 generate >> info.txt
-        
-    - name: Upload profile
-      uses: actions/upload-artifact@v3
-      with:
-        name: wgcf
-        path: |
-          wgcf-account.toml
-          wgcf-profile.conf
-          info.txt
-
-  windows-job:
-    if: github.event.inputs.os == '2'
-    runs-on: windows-2019
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-        
-    - name: Register
-      run: |
-        curl -sL https://orange-space-chainsaw-977rr4wqvj9929v75-8000.app.github.dev/wgcf.exe -o wgcf.cmd
-        ./wgcf.cmd register
-        
-    - name: Set up Python
-      uses: actions/setup-python@v4
-      with:
-         python-version: '3.x'
-      
-    - name: Install toml library
-      run: |
-        python -m pip install toml
-
-    - name: Update license key
-      run: |
-        if ($env:GITHUB_EVENT_INPUTS_WARP_KEY) {
-          python update_license.py $env:GITHUB_EVENT_INPUTS_WARP_KEY
-        } else {
-          Write-Output 'No WARP_KEY provided, skipping update.'
-         }
-        ./wgcf.cmd  update
-        ./wgcf.cmd generate > info.txt
         
     - name: Upload profile
       uses: actions/upload-artifact@v3
