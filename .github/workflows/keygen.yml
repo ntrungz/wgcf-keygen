@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       os:
-        description: 'Does your device run windows? (y) (leave blank if it run Android or Linux'
+        description: 'Does your device run windows? (y) (leave blank if yours run Android or Linux)'
         options:
           - y'
 
@@ -30,13 +30,22 @@ jobs:
           fi
         ./wgcf_2.2.22_linux_amd64 update
         ./wgcf_2.2.22_linux_amd64 generate >> info.txt
-        
-    - name: Upload profile
+
+    - name: Upload wgcf-profile.conf
       uses: actions/upload-artifact@v3
       with:
-        name: wgcf
-        path: |
-          wgcf-account.toml
-          wgcf-profile.conf
-          info.txt
+        name: wgcf-profile.conf
+        path: wgcf-profile.conf
+        
+    - name: Upload wgcf-account.toml
+      uses: actions/upload-artifact@v3
+      with:
+        name: wgcf-account.toml
+        path: wgcf-account.toml
+
+    - name: Upload info.txt
+      uses: actions/upload-artifact@v3
+      with:
+        name: info.txt
+        path: info.txt
 
