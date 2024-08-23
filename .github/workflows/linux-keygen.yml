@@ -21,9 +21,9 @@ jobs:
     steps:
     - name: Run on Ubuntu
       run: |
-        wget https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_linux_amd64
+        wget -q https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_linux_amd64
         chmod +x wgcf_2.2.22_linux_amd64
-        ./wgcf_2.2.22_linux_amd64 register
+        yes | ./wgcf_2.2.22_linux_amd64 register
         ./wgcf_2.2.22_linux_amd64 generate
 
   windows-job:
@@ -32,6 +32,6 @@ jobs:
     steps:
     - name: Run on Windows
       run: |
-        wget https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_windows_amd64.exe
-        ./wgcf_2.2.22_windows_amd64 register
+        wget -q https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_windows_amd64.exe
+        yes | ./wgcf_2.2.22_windows_amd64 register
         ./wgcf_2.2.22_windows_amd64 generate
