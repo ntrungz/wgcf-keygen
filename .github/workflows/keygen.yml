@@ -24,7 +24,16 @@ jobs:
         wget -q https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_linux_amd64
         chmod +x wgcf_2.2.22_linux_amd64
         yes | ./wgcf_2.2.22_linux_amd64 register
-        ./wgcf_2.2.22_linux_amd64 generate
+        ./wgcf_2.2.22_linux_amd64 generate | tee info.txt
+        
+    - name: Upload profile
+      uses: actions/upload-artifact@v3
+      with:
+        name: wgcf
+        path: |
+          wgcf-account.toml
+          wgcf-profile.conf
+          info.txt
 
   windows-job:
     if: github.event.inputs.os == '2'
@@ -34,4 +43,14 @@ jobs:
       run: |
         wget -q https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_windows_amd64.exe
         yes | ./wgcf_2.2.22_windows_amd64 register
-        ./wgcf_2.2.22_windows_amd64 generate
+        ./wgcf_2.2.22_windows_amd64 generate | tee info.txt
+
+    - name: Upload profile
+      uses: actions/upload-artifact@v3
+      with:
+        name: wgcf
+        path: |
+          wgcf-account.toml
+          wgcf-profile.conf
+          info.txt
+
