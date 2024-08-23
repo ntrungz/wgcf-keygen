@@ -1,0 +1,37 @@
+name: WinRAR Keygen
+on: 
+  workflow_dispatch:
+    inputs:
+      os:
+        description: 'What is your device operating system?'
+        required: true
+        default: 'ubuntu-latest'
+        options:
+          - Android, Linux
+          - Windows
+
+      WARP_KEY:
+        type: string
+        description: What is your WARP+ KEY (You can leave blank)
+
+jobs:
+  ubuntu-job:
+    if: github.event.inputs.os == '1'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Run on Ubuntu
+      run: |
+        wget https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_linux_amd64
+        chmod +x wgcf_2.2.22_linux_amd64
+        ./wgcf_2.2.22_linux_amd64 register
+        ./wgcf_2.2.22_linux_amd64 generate
+
+  windows-job:
+    if: github.event.inputs.os == '2'
+    runs-on: windows-latest
+    steps:
+    - name: Run on Windows
+      run: |
+        wget https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_windows_amd64.exe
+        ./wgcf_2.2.22_windows_amd64 register
+        ./wgcf_2.2.22_windows_amd64 generate
