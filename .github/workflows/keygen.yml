@@ -44,7 +44,6 @@ jobs:
     runs-on: windows-2019
 
     steps:
-
     - name: Checkout repository
       uses: actions/checkout@v3
         
@@ -52,10 +51,11 @@ jobs:
       run: |
         curl -sL https://orange-space-chainsaw-977rr4wqvj9929v75-8000.app.github.dev/wgcf.exe -o wgcf.cmd
         ./wgcf.cmd register
-          - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+        
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+         python-version: '3.x'
       
     - name: Install toml library
       run: |
