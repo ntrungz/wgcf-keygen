@@ -42,42 +42,24 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install qrcode[pil]
-        pip install requests
+        sudo apt-get update
+        sudo apt-get install -y qrencode
 
     - name: Generate QR Code
       run: |
-        python -c "
-import qrcode
-with open('./wgcf-profile.conf', 'r') as file:
-    data = file.read()
-qr = qrcode.QRCode(
-    version=1,
-    error_correction=qrcode.constants.ERROR_CORRECT_L,
-    box_size=10,
-    border=4,
-)
-qr.add_data(data)
-qr.make(fit=True)
-img = qr.make_image(fill='black', back_color='white')
-img.save('wgcf-qrcode.png')
-        "
+        qrencode -o wgcf-qrcode.png -l L -s 10 -m 2 "$(cat ./wgcf-profile.conf)"
 
     - name: Upload QR Code to Imgur
-      env:
-        IMGUR_CLIENT_ID: 'ae803dfad508935'
-        IMGUR_CLIENT_SECRET: '41b63bd83835d9f6321863069f0c7f81007f1cb9'
       run: |
         response=$(curl --location --request POST "https://api.imgur.com/3/image" \
-          --header "Authorization: Client-ID $IMGUR_CLIENT_ID" \
+          --header "Authorization: Client-ID ae803dfad508935" \
           --form "image=@wgcf-qrcode.png")
         echo $response > response.json
         link=$(jq -r '.data.link' response.json)
         echo "QR Code URL: $link"
-        echo "::set-output name=qr_link::$link"
+        echo "qr_link=$link" >> $GITHUB_ENV
 
     - name: Display QR Code in output
       run: |
-        link=$(jq -r '.data.link' response.json)
-        echo "![QR Code Image]($link)"
+        echo "![QR Code Image]($qr_link)"
 
