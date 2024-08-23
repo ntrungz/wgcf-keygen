@@ -44,7 +44,7 @@ jobs:
       run: |
         curl -O https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_windows_amd64.exe
         dir
-        .\wgcf_2.2.22_windows_amd64.exe register
+        wgcf_2.2.22_windows_amd64.exe register
         wgcf_2.2.22_windows_amd64 generate | tee info.txt
 
     - name: Upload profile
