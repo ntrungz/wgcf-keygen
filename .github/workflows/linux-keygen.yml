@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       os:
-        description: 'What is your device operating system? (**1** for Android/ Linux, **2** for Windows)'
+        description: 'What is your device operating system? (1 for Android/ Linux, 2 for Windows)'
         required: true
         default: '1'
         options:
