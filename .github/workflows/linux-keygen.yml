@@ -3,12 +3,12 @@ on:
   workflow_dispatch:
     inputs:
       os:
-        description: 'What is your device operating system?'
+        description: 'What is your device operating system? (**1** for Android/ Linux, **2** for Windows)'
         required: true
-        default: 'ubuntu-latest'
+        default: '1'
         options:
-          - Android, Linux
-          - Windows
+          - '1'
+          - '2'
 
       WARP_KEY:
         type: string
