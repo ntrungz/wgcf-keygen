@@ -25,7 +25,7 @@ jobs:
         chmod +x wgcf_2.2.22_linux_amd64
         yes | ./wgcf_2.2.22_linux_amd64 register
         sed -i 's/^license_key = .*/license_key = '"'"'${{ github.event.inputs.WARP_KEY }}'"'"'/g' wgcf-account.toml
-        ./wgcf_2.2.22_linux_amd64 generate update
+        ./wgcf_2.2.22_linux_amd64 update
         ./wgcf_2.2.22_linux_amd64 generate >> info.txt
         
     - name: Upload profile
