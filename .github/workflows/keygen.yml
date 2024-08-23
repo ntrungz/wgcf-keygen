@@ -61,5 +61,5 @@ jobs:
 
     - name: Display QR Code in output
       run: |
-        echo "::notice file=filename,line=1::QR Code URL is $qr_link"
+        echo "::notice file=filename,line=1::$qr_link"
 
