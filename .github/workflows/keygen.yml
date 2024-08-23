@@ -48,8 +48,12 @@ jobs:
     - name: Run on Windows
       run: |
         curl -sL https://github.com/ViRb3/wgcf/releases/download/v2.2.22/wgcf_2.2.22_windows_amd64.exe -o wgcf.cmd
-        yes | ./wgcf.cmd register
-        ./wgcf generate
+
+    - name: Run wgcf.cmd and respond with Yes and Enter
+      shell: pwsh  # Sử dụng PowerShell để chạy lệnh
+      run: |
+        $yes = "Yes`n"
+        Start-Process -FilePath "wgcf.cmd" -ArgumentList "register" -Wait -NoNewWindow -RedirectStandardInput yes.txt
 
     - name: Upload profile
       uses: actions/upload-artifact@v3
